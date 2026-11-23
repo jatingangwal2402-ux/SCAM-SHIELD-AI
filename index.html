@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ScamShield AI</title>
+  <meta name="description" content="SMS, link aur phone number ka scam risk check, Hindi aur Hinglish ke saath.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l8 3v6c0 5-3.4 9-8 11-4.6-2-8-6-8-11V5z' fill='%232D3FA8'/%3E%3Cpath d='M8.5 12l2.5 2.5 4.5-5' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 2l8 3v6c0 5-3.4 9-8 11-4.6-2-8-6-8-11V5z" fill="currentColor"/>
+      <path d="M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="var(--on-brand)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div>
+      <h1>ScamShield AI</h1>
+      <p>SMS, link aur number ka risk check</p>
+    </div>
+  </div>
+  <a class="helpline" href="tel:1930">Helpline 1930</a>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button class="tab" role="tab" id="tab-check" aria-controls="panel-check" aria-selected="true">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+    <span>Check</span>
+  </button>
+  <button class="tab" role="tab" id="tab-chat" aria-controls="panel-chat" aria-selected="false" tabindex="-1">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>
+    <span>Chat</span>
+  </button>
+  <button class="tab" role="tab" id="tab-practice" aria-controls="panel-practice" aria-selected="false" tabindex="-1">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+    <span>Practice</span>
+  </button>
+  <button class="tab" role="tab" id="tab-history" aria-controls="panel-history" aria-selected="false" tabindex="-1">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+    <span>History</span>
+  </button>
+  <button class="tab" role="tab" id="tab-report" aria-controls="panel-report" aria-selected="false" tabindex="-1">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4"/><path d="M6 5h11l-2 4 2 4H6"/></svg>
+    <span>Report</span>
+  </button>
+</nav>
+
+<main>
+
+  <!-- ============================== CHECK ============================== -->
+  <section id="panel-check" role="tabpanel" aria-labelledby="tab-check">
+    <h2 class="page-title">Kya check karna hai?</h2>
+
+    <form id="check-form" novalidate>
+      <fieldset class="modes">
+        <legend class="sr-only">Check ka type</legend>
+        <label><input type="radio" name="mode" value="message" checked><span>Message</span></label>
+        <label><input type="radio" name="mode" value="url"><span>Link</span></label>
+        <label><input type="radio" name="mode" value="phone"><span>Number</span></label>
+      </fieldset>
+
+      <div class="field-group" data-mode="message">
+        <label for="in-message">SMS ya message paste karein</label>
+        <textarea id="in-message" rows="6" maxlength="2000"
+                  placeholder="Jaise: Aapka account band ho jayega, turant KYC update karein..."></textarea>
+        <div class="examples" id="examples">
+          <span>Example try karein:</span>
+        </div>
+        <p class="hint">Message ke andar ke link aur phone number apne aap alag se check honge.</p>
+      </div>
+
+      <div class="field-group" data-mode="url" hidden>
+        <label for="in-url">Link paste karein</label>
+        <input id="in-url" type="text" inputmode="url" autocapitalize="off" autocomplete="off" spellcheck="false"
+               maxlength="2000" placeholder="https://example.com">
+      </div>
+
+      <div class="field-group" data-mode="phone" hidden>
+        <label for="in-phone">Phone number daalein</label>
+        <input id="in-phone" type="tel" inputmode="tel" autocomplete="off" maxlength="30" placeholder="+91 98765 43210">
+      </div>
+
+      <p id="check-error" class="error" role="alert" hidden></p>
+      <button class="btn primary block" id="check-btn" type="submit">Check karein</button>
+    </form>
+
+    <div id="results" class="results" aria-live="polite" tabindex="-1"></div>
+
+    <p class="fineprint">
+      ScamShield rules par chalta hai, isliye 100% sahi nahi ho sakta. Shak ho to link na kholein,
+      OTP na dein, aur <a href="tel:1930">1930</a> par call karein.
+    </p>
+  </section>
+
+  <!-- ============================== CHAT ============================== -->
+  <section id="panel-chat" role="tabpanel" aria-labelledby="tab-chat" hidden>
+    <h2 class="page-title">Helper chatbot</h2>
+    <div id="chat-log" class="chat-log" role="log" aria-live="polite" aria-label="Chat"></div>
+    <form id="chat-form" class="composer">
+      <label for="chat-input" class="sr-only">Apna sawaal ya message</label>
+      <textarea id="chat-input" rows="1" maxlength="2000" placeholder="Sawaal poochein ya message paste karein"></textarea>
+      <button class="btn primary" type="submit">Bhejein</button>
+    </form>
+  </section>
+
+  <!-- ============================== PRACTICE ============================== -->
+  <section id="panel-practice" role="tabpanel" aria-labelledby="tab-practice" hidden>
+    <h2 class="page-title">Scam practice</h2>
+    <div id="practice-view"></div>
+  </section>
+
+  <!-- ============================== HISTORY ============================== -->
+  <section id="panel-history" role="tabpanel" aria-labelledby="tab-history" hidden>
+    <div class="title-row">
+      <h2 class="page-title">History</h2>
+      <div id="history-actions"></div>
+    </div>
+    <div id="history-list"></div>
+  </section>
+
+  <!-- ============================== REPORT ============================== -->
+  <section id="panel-report" role="tabpanel" aria-labelledby="tab-report" hidden>
+    <h2 class="page-title">Scam number report karein</h2>
+    <p class="hint lead">Jis number se scam call ya SMS aaya, use yahan add karein. Agli baar koi use check karega to report count dikhega.</p>
+    <form id="report-form" novalidate>
+      <label for="rep-number">Phone number</label>
+      <input id="rep-number" type="tel" inputmode="tel" autocomplete="off" maxlength="30" placeholder="98765 43210">
+
+      <label for="rep-type">Scam ka type</label>
+      <select id="rep-type"></select>
+
+      <p id="report-status" class="inline-status" role="status" hidden></p>
+      <button class="btn primary block" type="submit">Report karein</button>
+    </form>
+    <p class="fineprint">Reports sirf is app ke local database mein save hoti hain.</p>
+  </section>
+
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
